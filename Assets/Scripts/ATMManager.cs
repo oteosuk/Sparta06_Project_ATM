@@ -84,7 +84,7 @@ public class ATMManager : MonoBehaviour
     {
         if (int.TryParse(withdrawInput.text, out int withdrawAmount)) // 문자열을 정수로 성공적으로 변환한 경우
         {
-            Deposit(withdrawAmount);
+            Withdraw(withdrawAmount);
         }
     }
 }
