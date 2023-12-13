@@ -5,14 +5,22 @@ using UnityEngine.UI;
 
 public class ATMManager : MonoBehaviour
 {
+    public static ATMManager instance;
+
     public Text cashText; // UI 텍스트 필드: 현금 잔액
     public Text bankText; // UI 텍스트 필드: 은행 잔액
     public InputField depositInput; // UI 인풋 필드: 입금할 금액
     public InputField withdrawInput;
     public GameObject notEnoughPopup; // 부족한 잔액 팝업
+    public string buttontext;
 
     private int cashBalance = 100000; // 현금 잔액 초기값
     private int bankBalance = 50000; // 은행 잔액 초기값
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
@@ -25,54 +33,60 @@ public class ATMManager : MonoBehaviour
         cashText.text = "현금\n" + cashBalance.ToString("N0");
         bankText.text = "Balance    " + bankBalance.ToString("N0").PadLeft(8);
     }
-
-    // 입금 버튼 클릭 이벤트 핸들러
-    public void DepositButtonClicked()
+    private void Deposit(int amount)
     {
-        // 인풋 필드에서 입력한 금액을 가져옴
+        if (cashBalance < amount)
+        {
+            notEnoughPopup.SetActive(true);
+        }
+        else
+        {
+            cashBalance -= amount;
+            bankBalance += amount;
+
+            UpdateUI();
+        }
+        depositInput.text = "";
+    }
+    public void DepositAmountClicked(int amount) // 정해진 금액 입금 버튼
+    {
+        Deposit(amount);
+    }
+    
+    public void DepositInputClicked() // 직접 입력 입금 버튼
+    {
         int depositAmount = int.Parse(depositInput.text);
+        Deposit(depositAmount);
+    }
 
-        // 현금이 입금할 금액보다 작으면 부족한 잔액 팝업을 띄움
-        if (cashBalance < depositAmount)
+    private void Withdraw(int amount)
+    {
+        if (bankBalance < amount)
         {
             notEnoughPopup.SetActive(true);
         }
         else
         {
-            // 현금에서 은행으로 금액 이체
-            cashBalance -= depositAmount;
-            bankBalance += depositAmount;
+            bankBalance -= amount;
+            cashBalance += amount;
 
-            // UI 업데이트
             UpdateUI();
         }
+        withdrawInput.text = "";
     }
 
-    // 입금 버튼 클릭 이벤트 핸들러
-    public void WithdrawButtonClicked()
+    public void WithdrawAmountClicked(int amount) // 정해진 금액 출금 버튼
     {
-        // 인풋 필드에서 입력한 금액을 가져옴
-        int WithdrawAmount = int.Parse(depositInput.text);
-
-        // 현금이 입금할 금액보다 작으면 부족한 잔액 팝업을 띄움
-        if (bankBalance < WithdrawAmount)
-        {
-            notEnoughPopup.SetActive(true);
-        }
-        else
-        {
-            // 현금에서 은행으로 금액 이체
-            bankBalance -= WithdrawAmount;
-            cashBalance += WithdrawAmount;
-
-            // UI 업데이트
-            UpdateUI();
-        }
+        Withdraw(amount);
     }
 
-    /*// 부족한 잔액 팝업 닫기 버튼 클릭 이벤트 핸들러
-    public void CloseNotEnoughPopup()
+    public void WithdrawInputClicked() // 직접 입력 출금 버튼
     {
-        notEnoughPopup.SetActive(false);
-    }*/
+        int withdrawAmount = int.Parse(withdrawInput.text);
+        Withdraw(withdrawAmount);
+    }
+
+    
+
+
 }
