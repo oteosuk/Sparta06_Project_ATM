@@ -46,6 +46,7 @@ public class ATMManager : MonoBehaviour
         }
         depositInput.text = "";
     }
+
     public void DepositAmountClicked(int amount) // 정해진 금액 입금 버튼
     {
         Deposit(amount);
