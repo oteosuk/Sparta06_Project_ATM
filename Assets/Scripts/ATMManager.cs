@@ -7,15 +7,14 @@ public class ATMManager : MonoBehaviour
 {
     public static ATMManager instance;
 
-    public Text cashText; // UI ÅØ½ºÆ® ÇÊµå: Çö±İ ÀÜ¾×
-    public Text bankText; // UI ÅØ½ºÆ® ÇÊµå: ÀºÇà ÀÜ¾×
-    public InputField depositInput; // UI ÀÎÇ² ÇÊµå: ÀÔ±İÇÒ ±İ¾×
+    public Text cashText; // UI í…ìŠ¤íŠ¸ í•„ë“œ: í˜„ê¸ˆ ì”ì•¡
+    public Text bankText; // UI í…ìŠ¤íŠ¸ í•„ë“œ: ì€í–‰ ì”ì•¡
+    public InputField depositInput; // UI ì¸í’‹ í•„ë“œ: ì…ê¸ˆí•  ê¸ˆì•¡
     public InputField withdrawInput;
-    public GameObject notEnoughPopup; // ºÎÁ·ÇÑ ÀÜ¾× ÆË¾÷
-    public string buttontext;
+    public GameObject notEnoughPopup; // ë¶€ì¡±í•œ ì”ì•¡ íŒì—…
 
-    private int cashBalance = 100000; // Çö±İ ÀÜ¾× ÃÊ±â°ª
-    private int bankBalance = 50000; // ÀºÇà ÀÜ¾× ÃÊ±â°ª
+    private int cashBalance = 100000; // í˜„ê¸ˆ ì”ì•¡ ì´ˆê¸°ê°’
+    private int bankBalance = 50000; // ì€í–‰ ì”ì•¡ ì´ˆê¸°ê°’
 
     private void Awake()
     {
@@ -24,13 +23,12 @@ public class ATMManager : MonoBehaviour
 
     void Start()
     {
-        UpdateUI(); // UI ¾÷µ¥ÀÌÆ® ÇÔ¼ö È£Ãâ
-        notEnoughPopup.SetActive(false); // ºÎÁ·ÇÑ ÀÜ¾× ÆË¾÷ ºñÈ°¼ºÈ­
+        UpdateUI();
     }
 
     void UpdateUI()
     {
-        cashText.text = "Çö±İ\n" + cashBalance.ToString("N0");
+        cashText.text = "í˜„ê¸ˆ\n" + cashBalance.ToString("N0");
         bankText.text = "Balance    " + bankBalance.ToString("N0").PadLeft(8);
     }
     private void Deposit(int amount)
@@ -48,12 +46,12 @@ public class ATMManager : MonoBehaviour
         }
         depositInput.text = "";
     }
-    public void DepositAmountClicked(int amount) // Á¤ÇØÁø ±İ¾× ÀÔ±İ ¹öÆ°
+    public void DepositAmountClicked(int amount) // ì •í•´ì§„ ê¸ˆì•¡ ì…ê¸ˆ ë²„íŠ¼
     {
         Deposit(amount);
     }
     
-    public void DepositInputClicked() // Á÷Á¢ ÀÔ·Â ÀÔ±İ ¹öÆ°
+    public void DepositInputClicked() // ì§ì ‘ ì…ë ¥ ì…ê¸ˆ ë²„íŠ¼
     {
         int depositAmount = int.Parse(depositInput.text);
         Deposit(depositAmount);
@@ -75,18 +73,14 @@ public class ATMManager : MonoBehaviour
         withdrawInput.text = "";
     }
 
-    public void WithdrawAmountClicked(int amount) // Á¤ÇØÁø ±İ¾× Ãâ±İ ¹öÆ°
+    public void WithdrawAmountClicked(int amount) // ì •í•´ì§„ ê¸ˆì•¡ ì¶œê¸ˆ ë²„íŠ¼
     {
         Withdraw(amount);
     }
 
-    public void WithdrawInputClicked() // Á÷Á¢ ÀÔ·Â Ãâ±İ ¹öÆ°
+    public void WithdrawInputClicked() // ì§ì ‘ ì…ë ¥ ì¶œê¸ˆ ë²„íŠ¼
     {
         int withdrawAmount = int.Parse(withdrawInput.text);
         Withdraw(withdrawAmount);
     }
-
-    
-
-
 }
