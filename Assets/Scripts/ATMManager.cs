@@ -53,8 +53,10 @@ public class ATMManager : MonoBehaviour
     
     public void DepositInputClicked() // 직접 입력 입금 버튼
     {
-        int depositAmount = int.Parse(depositInput.text);
-        Deposit(depositAmount);
+        if (int.TryParse(depositInput.text, out int depositAmount)) // 문자열을 정수로 성공적으로 변환한 경우
+        {
+            Deposit(depositAmount);
+        }
     }
 
     private void Withdraw(int amount)
@@ -80,7 +82,9 @@ public class ATMManager : MonoBehaviour
 
     public void WithdrawInputClicked() // 직접 입력 출금 버튼
     {
-        int withdrawAmount = int.Parse(withdrawInput.text);
-        Withdraw(withdrawAmount);
+        if (int.TryParse(withdrawInput.text, out int withdrawAmount)) // 문자열을 정수로 성공적으로 변환한 경우
+        {
+            Deposit(withdrawAmount);
+        }
     }
 }
